@@ -6,12 +6,13 @@ function Title({children}: {children :ReactNode}) {
 export default Title;
 const styles = StyleSheet.create({
   title: {
+    fontFamily: 'open-sans-bold',
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#d17206',
+    color: 'white',
     padding: 12,
     textAlign: 'center',
     borderWidth:2,
-    borderColor: '#d17206',
+    borderColor: 'white',
   }
 })
