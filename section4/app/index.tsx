@@ -9,15 +9,16 @@ import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 
 export default function Index() {
-  const [userNumber, setUserNumber] = useState<number>();
+  const [userNumber, setUserNumber] = useState<number | null>();
   const [gameIsOver, setGameIsOver] = useState<boolean>(true);
-  
-  const [fontsLoaded] = useFonts({
-    'open-sans': require('../assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold': require('../assets/fonts/OpenSans-Bold.ttf')
-  })
+  const [guessRounds, setGuessRounds] = useState(0);
 
-  if(!fontsLoaded) {
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("../assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("../assets/fonts/OpenSans-Bold.ttf"),
+  });
+
+  if (!fontsLoaded) {
     return <AppLoading />;
   }
   function pickedNumberHandler(pickedNumber: number) {
@@ -25,10 +26,15 @@ export default function Index() {
     setGameIsOver(false);
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numberOfrounds:number) {
     setGameIsOver(true);
+    setGuessRounds(numberOfrounds);
   }
 
+  function startNewGameHandler() {
+    setUserNumber(null);
+    setGuessRounds(0);
+  }
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
   if (userNumber) {
     screen = (
@@ -36,7 +42,13 @@ export default function Index() {
     );
   }
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = (
+      <GameOverScreen
+        userNumber={userNumber}
+        roundsNumber={guessRounds}
+        onStartNewGame={startNewGameHandler}
+      />
+    );
   }
 
   return (
