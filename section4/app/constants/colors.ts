@@ -6,5 +6,6 @@ const Colors = {
   accent500: '#ddb52f',
   
 };
+// constants도 .android.tsx, .ios.tsx 가능
 
 export default Colors

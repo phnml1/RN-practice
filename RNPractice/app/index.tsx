@@ -37,7 +37,6 @@ export default function App() {
   }
   return (
     <>
-    <StatusBar style = 'light'/>
     <View style={styles.appContainer}>
       {/* 버튼에는 정해진스타일이 있어서 만일 자유롭게 스타일링하고싶으면 Pressable사용용 */}
       <Button

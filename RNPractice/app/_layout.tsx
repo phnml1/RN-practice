@@ -1,7 +1,12 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
 
 export default function RootLayout() {
-  return <Stack screenOptions={{
-    headerShown: false, // 모든 스크린에서 헤더 숨기기
-  }}/>;
+  return (
+    <>
+      <StatusBar style="light" />
+      <Stack />
+    </>
+  );
 }
