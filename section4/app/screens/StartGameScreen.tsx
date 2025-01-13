@@ -1,4 +1,4 @@
-import { TextInput, View, StyleSheet, Alert , Text } from "react-native";
+import { TextInput, View, StyleSheet, Alert , useWindowDimensions } from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import { useState } from "react";
 import Colors from "../constants/colors";
@@ -12,7 +12,7 @@ function StartGameScreen({
   onPickNumber: (pickedNumber: number) => void;
 }) {
   const [enteredNumber, setEnteredNumber] = useState<string>("");
-
+  const {width, height} = useWindowDimensions();
   function numberInputHandler(enteredText: string) {
     setEnteredNumber(enteredText);
   }
@@ -34,8 +34,10 @@ function StartGameScreen({
     }
     onPickNumber(chosenNumber);
   }
+
+  const marginTopDistance =  height < 380? 30: 100;
   return (
-    <View style = {styles.rootContainer}>
+    <View style = {[styles.rootContainer, {marginTop: marginTopDistance}]}>
       <Title>Guess My Number</Title>
       <Card>
         <InstructionText style={styles.instructionText}>Enter a Number</InstructionText>
@@ -62,10 +64,12 @@ function StartGameScreen({
 }
 export default StartGameScreen;
 
+// const deviceHeight = Dimensions.get('window').height;
+// 한번만 실행되기때문에 Dimensions로는 동적으로 변경될 때 달라지지 않음
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop:100,
+    // marginTop: deviceHeight < 380? 30: 100,
     alignItems: 'center',
   },
   

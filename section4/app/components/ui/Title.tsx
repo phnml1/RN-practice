@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     padding: 12,
+    maxWidth:'80%',
+    width: 300,
     textAlign: 'center',
     borderWidth:2,
     borderColor: 'white',

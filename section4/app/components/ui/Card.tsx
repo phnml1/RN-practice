@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 
 function Card({children}:{children:ReactNode}) {
   return (
@@ -8,11 +8,13 @@ function Card({children}:{children:ReactNode}) {
     </View>
   )
 }
+
+const deviceWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   inputContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 50,
+    marginTop:deviceWidth<380 ? 18: 36,
     padding: 16,
     backgroundColor: "#4d0629",
     marginHorizontal: 24, // 가로 마진
