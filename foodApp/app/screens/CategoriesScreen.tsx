@@ -1,5 +1,5 @@
 import React from "react";
-import { CATEGORIES } from "../data/dummy-data";
+import { CATEGORIES } from "../../data/dummy-data";
 import { FlatList, StyleSheet } from "react-native";
 import CategoryGridTitle from "../components/CategoryGridTitle";
 
@@ -8,7 +8,9 @@ function CategoriesScreen({navigation}) {
   console.log(navigation);
   function renderCategoryItem(itemData:{item : {id:string; color:string; title:string}}) {
     function PressHandler() {
-      navigation.navigate('MealsOverview');
+      navigation.navigate('MealsOverview', {
+        categoryId: itemData.item.id,
+      });
     }
     return <CategoryGridTitle title={itemData.item.title} color= {itemData.item.color} onPress = {PressHandler}/>; 
   }
