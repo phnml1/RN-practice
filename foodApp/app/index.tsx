@@ -7,9 +7,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import React from "react";
 import MealsOverViewScreen from "@/app/screens/MealsOverViewScreen";
+import MealDetailScreen from "./screens/MealsDetailScreen";
 export type RootStackParamList = {
   MealsCategories: undefined;
   MealsOverview: { categoryId: number };
+  MealDetail: { mealId: number };
 };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,8 +41,8 @@ export default function Index() {
             <Stack.Screen
               name="MealsOverview"
               component={MealsOverViewScreen}
-              
             />
+            <Stack.Screen name="MealDetail" component={MealDetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </NavigationIndependentTree>
