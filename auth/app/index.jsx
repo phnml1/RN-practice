@@ -1,12 +1,17 @@
-import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-
-import LoginScreen from './screens/LoginScreen';
-import SignupScreen from './screens/SignupScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
-import { Colors } from './constants/styles';
-import React from 'react';
+import {
+  NavigationContainer,
+  NavigationIndependentTree,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import IconButton from './component/ui/IconButton';
+import LoginScreen from "./screens/LoginScreen";
+import SignupScreen from "./screens/SignupScreen";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import { Colors } from "./constants/styles";
+import React, { useContext } from "react";
+import { AuthContext } from "./store/auth-context";
+import AuthContextProvider from "./store/auth-context";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +20,7 @@ function AuthStack() {
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: 'white',
+        headerTintColor: "white",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
@@ -26,25 +31,32 @@ function AuthStack() {
 }
 
 function AuthenticatedStack() {
+  const authCtx = useContext(AuthContext);
   return (
     <Stack.Navigator
       screenOptions={{
         headerStyle: { backgroundColor: Colors.primary500 },
-        headerTintColor: 'white',
+        headerTintColor: "white",
         contentStyle: { backgroundColor: Colors.primary100 },
       }}
     >
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} options={
+      {headerRight: ({tintColor}) => <IconButton icon="exit" color = {tintColor} onPress={authCtx.logout} size={24}/>}
+      }/>
     </Stack.Navigator>
   );
 }
 
 function Navigation() {
+  const authCtx = useContext(AuthContext);
+
   return (
     <NavigationIndependentTree>
-    <NavigationContainer>
-      <AuthStack />
-    </NavigationContainer>
+      <NavigationContainer>
+        {!authCtx.isAuthenticated && <AuthStack />}
+        {authCtx.isAuthenticated && <AuthenticatedStack />}
+
+      </NavigationContainer>
     </NavigationIndependentTree>
   );
 }
@@ -53,8 +65,9 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-
-      <Navigation />
+      <AuthContextProvider>
+        <Navigation />
+      </AuthContextProvider>
     </>
   );
 }
